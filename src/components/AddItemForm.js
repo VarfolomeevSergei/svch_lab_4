@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../features/Slice";
 import { useTranslation } from "react-i18next";
 import "../i18n";
@@ -29,6 +29,14 @@ const AddItemForm = () => {
     setError("");
   };
 
+  const filters = useSelector((state)=>{
+    return state.filters.filters.filter(
+      (filter)=>filter.type !== "All"
+    );
+  })
+
+
+
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -38,12 +46,13 @@ const AddItemForm = () => {
         onChange={(e) => setName(e.target.value)}
         required
       />
+
       <select value={type} onChange={(e) => setType(e.target.value)}>
-        <option value="Консультация">{t("items.Consultation")}</option> 
-        <option value="Анализ">{t("items.Analysis")}</option> 
-        <option value="Диагностика">{t("items.Diagnostics")}</option> 
-        <option value="Процедура">{t("items.Procedure")}</option> 
+      {filters.map((filter) =>(
+        <option value={filter.type}>{filter.type}</option>
+      ))}
       </select>
+
       <input
         type="number"
         placeholder={t("items.price")} 

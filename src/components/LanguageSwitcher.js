@@ -6,7 +6,7 @@ const LanguageSwitcher = () => {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
-    localStorage.setItem("language", lng); // Сохраняем выбор языка
+    localStorage.setItem("language", lng); 
   };
 
   useEffect(() => {
